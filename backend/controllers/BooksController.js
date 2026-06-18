@@ -21,9 +21,9 @@ BooksController.prototype.get = async (req, res) => {
          res.status(200).json({
             books: books.map(book => ({
                ...book,
-               releaseDate: new Date(book.releaseDate).toLocaleDateString(),
-               createdAt: new Date(book.createdAt).toLocaleDateString(),
-               updatedAt: new Date(book.updatedAt).toLocaleDateString(),
+               releaseDate: new Date(book.releaseDate).toLocaleDateString("en-CA"),
+               createdAt: new Date(book.createdAt).toLocaleDateString("en-CA"),
+               updatedAt: new Date(book.updatedAt).toLocaleDateString("en-CA"),
             })),
          });
       });
@@ -67,9 +67,9 @@ BooksController.prototype.create = async (req, res) => {
                   message: `Book created successfully!`,
                   books: books.map(book => ({
                      ...book,
-                     releaseDate: new Date(book.releaseDate).toLocaleDateString(),
-                     createdAt: new Date(book.createdAt).toLocaleDateString(),
-                     updatedAt: new Date(book.updatedAt).toLocaleDateString(),
+                     releaseDate: new Date(book.releaseDate).toLocaleDateString("en-CA"),
+                     createdAt: new Date(book.createdAt).toLocaleDateString("en-CA"),
+                     updatedAt: new Date(book.updatedAt).toLocaleDateString("en-CA"),
                   })),
                });
             });
@@ -115,9 +115,9 @@ BooksController.prototype.update = async (req, res) => {
                   message: `Book updated successfully!`,
                   books: books.map(book => ({
                      ...book,
-                     releaseDate: new Date(book.releaseDate).toLocaleDateString(),
-                     createdAt: new Date(book.createdAt).toLocaleDateString(),
-                     updatedAt: new Date(book.updatedAt).toLocaleDateString(),
+                     releaseDate: new Date(book.releaseDate).toLocaleDateString("en-CA"),
+                     createdAt: new Date(book.createdAt).toLocaleDateString("en-CA"),
+                     updatedAt: new Date(book.updatedAt).toLocaleDateString("en-CA"),
                   })),
                });
             });
@@ -153,7 +153,12 @@ BooksController.prototype.delete = async (req, res) => {
 
             return res.status(200).json({
                message: `Book deleted successfully!`,
-               books: books,
+               books: books.map(book => ({
+                  ...book,
+                  releaseDate: new Date(book.releaseDate).toLocaleDateString("en-CA"),
+                  createdAt: new Date(book.createdAt).toLocaleDateString("en-CA"),
+                  updatedAt: new Date(book.updatedAt).toLocaleDateString("en-CA"),
+               })),
             });
          });
       });

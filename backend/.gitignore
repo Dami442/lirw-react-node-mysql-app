@@ -7,4 +7,5 @@ temp/
 .DS_Store
 dist/*
 .env
+!.env.example
 logs/*
