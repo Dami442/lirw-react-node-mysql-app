@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  variables:
+    VITE_API_URL: "/api"
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging/Authenticating in to Amazon ECR..."
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+      - IMAGE_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME
+      - echo "Image URI -> $IMAGE_URI:latest"
+
+  build:
+    commands:
+      - echo "Building frontend Docker image..."
+      - docker build --build-arg VITE_API_URL=$VITE_API_URL -t $IMAGE_URI:latest ./frontend
+
+  post_build:
+    commands:
+      - echo "Pushing frontend image to ECR..."
+      - docker push $IMAGE_URI:latest
+      - echo "Writing imagedefinitions.json..."
+      # The 'name' value must match with the container name in Task Definition
+      - printf '[{"name":"frontend","imageUri":"%s"}]' $IMAGE_URI:latest > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
