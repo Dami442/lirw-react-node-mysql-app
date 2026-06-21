@@ -26,7 +26,10 @@ COPY . .
 
 # Create a non-root user and switch to it
 # Running as root inside a container is a security risk
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Create logs directory and set ownership BEFORE switching to non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup && \
+    mkdir -p /app/logs && \
+    chown -R appuser:appgroup /app
 USER appuser
 
 EXPOSE 3200
