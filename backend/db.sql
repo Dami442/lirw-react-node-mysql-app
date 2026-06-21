@@ -8,6 +8,9 @@ GRANT ALL PRIVILEGES ON react_node_app.* TO
 FLUSH
     PRIVILEGES;
 
+SELECT User, Host FROM mysql.user;
+SHOW GRANTS FOR 'appuser'@'%';
+
 
 -- Create Tables
 CREATE TABLE `author`

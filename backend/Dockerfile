@@ -2,7 +2,8 @@
 # === STAGE 1: Prepare dependencies === #
 # ===================================== #
 
-FROM node:20-alpine AS dependencies
+#FROM node:20-alpine AS dependencies
+FROM public.ecr.aws/docker/library/node:20-alpine AS dependencies
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -14,7 +15,8 @@ RUN npm ci --omit=dev
 # === STAGE 2: Production app === #
 # =============================== #
 
-FROM node:20-alpine AS production
+#FROM node:20-alpine AS production
+FROM public.ecr.aws/docker/library/node:20-alpine AS production
 WORKDIR /app
 
 # Copy only production node_modules from stage 1
