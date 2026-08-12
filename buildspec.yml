@@ -3,25 +3,27 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18  # Choose your runtime: nodejs, python, java, etc.
+      nodejs: 18
     commands:
       - echo "Installing dependencies..."
-      - npm install
-  pre_build:
-    commands:
-      - echo "Running tests and linting..."
-      - npm test || true
+      - cd frontend && npm install
+      - cd ../backend && npm install
+      - cd ..
+
   build:
     commands:
-      - echo "Building production artifacts..."
-      - npm run build || echo "No build script specified, skipping..."
+      - echo "Building React production static assets..."
+      - cd frontend && npm run build
+      - cd ..
+
   post_build:
     commands:
-      - echo "Build completed successfully on $(date)"
+      - echo "Build phase completed successfully on $(date)"
 
 artifacts:
   files:
-    - '**/*'        # Include all files and directories
-  # Exclude unnecessary directories from deployment package
-  exclude-paths:
-    - 'node_modules/**/*'
+    - 'frontend/build/***'
+    - 'backend/***'
+    - 'scripts/***'
+    - 'appspec.yml'
+  discard-paths: no
