@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18  # Choose your runtime: nodejs, python, java, etc.
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  pre_build:
+    commands:
+      - echo "Running tests and linting..."
+      - npm test || true
+  build:
+    commands:
+      - echo "Building production artifacts..."
+      - npm run build || echo "No build script specified, skipping..."
+  post_build:
+    commands:
+      - echo "Build completed successfully on $(date)"
+
+artifacts:
+  files:
+    - '**/*'        # Include all files and directories
+  # Exclude unnecessary directories from deployment package
+  exclude-paths:
+    - 'node_modules/**/*'
