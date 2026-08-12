@@ -1,6 +1,8 @@
 #!/bin/bash
+set -e
+
 DIR="/var/www/lirw-app"
-if [ -d "$DIR" ]; then
-  rm -rf "$DIR"
-fi
+
+echo "Cleaning up destination directory..."
+rm -rf "$DIR"
 mkdir -p "$DIR"
